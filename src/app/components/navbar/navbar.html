@@ -1,0 +1,15 @@
+<nav class="navbar sticky-top navbar-expand-lg bg-warning px-3 mb-5">
+  <div class="container d-flex justify-content-between align-items-center">
+      <div>
+        <a class="navbar-brand fw-bold" routerLink="">Movie App</a>
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <p-dropdown class="lang-dropdown bg-transparent border-0" [options]="languages" [(ngModel)]="selectedLang"
+          styleClass="w-4rem text-uppercase"></p-dropdown>
+       <a class=" d-flex gap-2 align-items-center nav-link">
+        <i class="pi pi-heart-fill" style="color:#292D32;"></i>
+        <span>Watchlist</span>
+       </a> 
+      </div>
+    </div>
+</nav>
