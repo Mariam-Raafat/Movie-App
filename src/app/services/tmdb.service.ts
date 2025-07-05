@@ -14,4 +14,25 @@ export class TmdbService {
       }
     })
   }
+  getMovieDetails(id: number | string) {
+    return this.http.get(this._baseApi, {
+      params: {
+        endpoint: `movie/${id}`
+      }
+    })
+  }
+  getReviews(id: number | string) {
+    return this.http.get(this._baseApi, {
+      params: {
+        endpoint: `movie/${id}/reviews`
+      }
+    })
+  }
+  getRecommendations(id: number | string) {
+    return this.http.get(this._baseApi, {
+      params: {
+        endpoint: `movie/${id}/recommendations`
+      }
+    })
+  }
 }

@@ -15,13 +15,17 @@
         <div class="col-6 col-md-3 col-lg-2 mb-5">
             <p-card [style]="{ overflow: 'hidden',height: '450px' }" class="position-relative">
                 <ng-template #header>
-                    <img [src]="movie.poster_url" alt="Poster" class="w-100"
+                   <a [routerLink]="['movie-details',movie.id]">
+                    <img  [src]="movie.poster_url" alt="Poster" class="w-100"
                         style="height: 300px; object-fit: cover;" />
+                   </a> 
                     <p-badge [value]="movie.vote_average.toFixed(1)" badgeSize="xlarge" severity="contrast"
                         [styleClass]="getRating(movie.vote_average)" class="position-absolute end-0 "></p-badge>
                 </ng-template>
                 <div class="position-relative">
-                    <span class="movie-title">{{movie.original_title}}</span>
+                    <a [routerLink]="['movie-details',movie.id]" class="nav-link">
+                        <span class="movie-title">{{movie.original_title}}</span>
+                    </a>
                     <p class="release-date">
                         {{movie.release_date}}
                     </p>
