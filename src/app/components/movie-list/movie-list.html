@@ -29,10 +29,10 @@
                     <p class="release-date">
                         {{movie.release_date}}
                     </p>
-                    <a (click)="addToWatchList(movie)"
+                    <button (click)="watchListStore.toggleWatchList(movie)"
                         class="position-absolute top-50 start-100 nav-link me-2 watchlist">
-                        <i [ngClass]="movie.isFavorite? 'pi pi-heart-fill text-warning': 'pi pi-heart'"></i>
-                    </a>
+                        <i [ngClass]="watchListStore.isInWatchList(movie.id)() ? 'pi pi-heart-fill text-warning' : 'pi pi-heart'"></i>
+                    </button>
                 </div>
             </p-card>
         </div>

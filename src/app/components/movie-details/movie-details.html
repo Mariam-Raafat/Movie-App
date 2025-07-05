@@ -17,8 +17,8 @@
         <div class="col-md-8 position-relative">
             <h2 class="fw-bold">{{ movie.title }}</h2>
             <!-- Watchlist Button -->
-            <button (click)="addToWatchList(movie)" class="position-absolute top-0 start-100 nav-link me-2 watchlist">
-                <i [ngClass]="movie.isFavorite? 'pi pi-heart-fill text-warning': 'pi pi-heart'"></i>
+            <button (click)="watchListStore.toggleWatchList(movie)" class="position-absolute top-0 start-100 nav-link me-2 watchlist">
+                <i [ngClass]="watchListStore.isInWatchList(movie.id)() ? 'pi pi-heart-fill text-warning' : 'pi pi-heart'"></i>
             </button>
             <p class="text-muted">{{ movie.release_date }}</p>
 

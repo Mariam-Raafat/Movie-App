@@ -1,0 +1,57 @@
+<div class="container py-4">
+  <h3 class="fw-bold mb-4">Watch list</h3>
+
+  @if (watchListStore.watchList().length === 0) {
+    <div class="alert alert-info text-center">
+      Your watchlist is empty. <a routerLink="/" class="alert-link">Browse movies</a> to get started!
+    </div>
+  }
+
+  @else {
+    <div class="row g-4">
+      @for (movie of watchListStore.watchList(); track movie.id) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100 position-relative">
+            <div class="row g-0">
+              <div class="col-4">
+                <img
+                  [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
+                  class="img-fluid rounded-start h-100 w-100 object-fit-cover"
+                  [alt]="movie.title"
+                />
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title fw-bold mb-1">{{ movie.title }}</h5>
+                  <p class="card-text text-muted mb-1" style="font-size: 0.9rem">
+                    {{ movie.release_date }}
+                  </p>
+                  <div class="mb-2">
+                    <i class="pi pi-star-fill text-warning"></i>
+                    {{ movie.vote_average }} 
+                  </div>
+                  <p class="card-text small">
+                    {{ movie.overview | slice:0:100 }}...
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              (click)="watchListStore.removeFromWatchList(movie.id)"
+              class="position-absolute top-0 end-0 m-2 btn btn-sm btn-light border-0"
+            >
+              <i class="pi pi-heart-fill text-warning"></i>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="text-center mt-4">
+    <a routerLink="/" class="btn btn-outline-secondary">
+     Back to Home
+    </a>
+  </div>
+</div>
+

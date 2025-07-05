@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule } from '@angular/common';
+import { WatchListStore } from '../../signals/movie.store';
 
 @Component({
   selector: 'app-movie-details',
@@ -19,13 +20,12 @@ import { CommonModule } from '@angular/common';
 export class MovieDetails implements OnInit {
   private _tmdbService = inject(TmdbService);
   private _route = inject(ActivatedRoute);
-
+  watchListStore = inject(WatchListStore);
   readonly paramMap = toSignal(this._route.paramMap, { initialValue: null });
   readonly movieId = computed(() => this.paramMap()?.get('id') || '');
 
   movie: any = null;
   loading = true;
-  isFavorite = false;
   recommendations: any[] = [];
   reviews: any[] = [];
 
@@ -56,7 +56,5 @@ export class MovieDetails implements OnInit {
     return 'bg-danger text-white';
   }
 
-  addToWatchList(movie: any) {
-    movie.isFavorite = !movie.isFavorite;
-  }
+
 }

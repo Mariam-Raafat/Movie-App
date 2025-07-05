@@ -12,7 +12,7 @@ import { CardModule } from 'primeng/card';
 import { BadgeModule } from 'primeng/badge';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PaginatorModule } from 'primeng/paginator';
-
+import { WatchListStore } from '../../signals/movie.store';
 @Component({
   selector: 'app-movie-list',
   standalone: true,
@@ -35,8 +35,7 @@ export class MovieList implements OnInit {
   totalResults = 20 * this.rows;
   movies: any[] = [];
   movie: any = null;
-  isFavorite = false;
-
+  watchListStore = inject(WatchListStore);
   private _moviesService = inject(TmdbService);
   
 
@@ -65,7 +64,5 @@ export class MovieList implements OnInit {
     }
   }
 
-  addToWatchList(movie: any) {
-    movie.isFavorite = !movie.isFavorite;
-  }
+
 }
