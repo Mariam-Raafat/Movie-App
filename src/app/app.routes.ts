@@ -11,7 +11,19 @@ export const routes: Routes = [{
 {
     path: 'watch-list',
     loadComponent: () => import('./components/watch-list/watch-list').then(m => m.WatchList)
+},
+{
+    path: 'search-result',
+    loadComponent: () => import('./components/search-result/search-result').then(m => m.SearchResult)
+},
+    
+{
+    path: 'tv-list',
+    loadComponent: () => import('./components/tv-list/tv-list').then(m => m.TvList)
+},
+{
+    path: 'tv-details/:id',
+    loadComponent: () => import('./components/tv-details/tv-details').then(m => m.TvDetails)
 }
-
 
 ];

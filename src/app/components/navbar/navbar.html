@@ -1,14 +1,21 @@
 <nav class="navbar sticky-top navbar-expand-lg bg-warning px-3 mb-5">
   <div class="container d-flex justify-content-between align-items-center">
     <div>
-      <a class="navbar-brand fw-bold" routerLink="">Movie App</a>
+      <a class="navbar-brand fw-bold" routerLink="">{{ translateService.translate('Title') }}</a>
     </div>
     <div class="d-flex gap-3 align-items-center">
-      <p-dropdown class="lang-dropdown bg-transparent border-0" [options]="languages" [(ngModel)]="selectedLang"
-        styleClass="w-4rem text-uppercase"></p-dropdown>
-      <a routerLink="watch-list" class=" d-flex gap-2 align-items-center nav-link">
-        <i class="pi pi-heart-fill" style="color:#292D32;"></i>
-        <span>Watchlist</span>
+      <p-select [options]="languages" [(ngModel)]="selectedLang" (ngModelChange)="onLangChange()" optionLabel="label"
+        class="lang-dropdown" optionValue="value" class="bg-warning"></p-select>
+      <a routerLink="watch-list"
+        class="heart-icon-wrapper text-dark position-relative d-flex align-items-center gap-2 nav-link">
+        <span>{{ translateService.translate('Watchlist') }}</span>
+        <div class="position-relative">
+          <i class="pi pi-heart-fill fs-4"></i>
+          <span
+            class="badge position-absolute top-0 start-100 translate-middle rounded-circle bg-dark text-white d-flex justify-content-center align-items-center">
+            {{ watchListStore.count() }}
+          </span>
+        </div>
       </a>
     </div>
   </div>

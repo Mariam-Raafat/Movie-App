@@ -1,50 +1,74 @@
 <div class="container">
-    <div class="hero-section mb-5">
-        <div class="container p-5">
-            <h1>Welcome to our movie app</h1>
-            <p>Millions of movies, TV shows and people to discover. Explore now.</p>
-            <div class="d-flex gap-3">
-                <input type="text" class="form-control" placeholder="search and explore...">
-                <button class="btn btn-warning">Search</button>
-            </div>
-        </div>
+  <div class="hero-section mb-5">
+    <div class="container p-5">
+      <h1>{{ translateService.translate('Welcome') }}</h1>
+      <p>{{ translateService.translate('Explore') }}</p>
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex gap-3">
+        <input type="text" formControlName="searchInput" class="form-control"
+          [placeholder]="translateService.translate('SearchPlaceholder')" />
+        <button class="btn btn-warning">{{ translateService.translate('Search') }}</button>
+      </form>
     </div>
-    <h2 class="mb-5">Now Playing</h2>
-    <div class="row">
-        @for (movie of movies; track movie.id){
-        <div class="col-6 col-md-3 col-lg-2 mb-5">
-            <p-card [style]="{ overflow: 'hidden',height: '450px' }" class="position-relative">
-                <ng-template #header>
-                   <a [routerLink]="['movie-details',movie.id]">
-                    <img  [src]="movie.poster_url" alt="Poster" class="w-100"
-                        style="height: 300px; object-fit: cover;" />
-                   </a> 
-                    <p-badge [value]="movie.vote_average.toFixed(1)" badgeSize="xlarge" severity="contrast"
-                        [styleClass]="getRating(movie.vote_average)" class="position-absolute end-0 "></p-badge>
-                </ng-template>
-                <div class="position-relative">
-                    <a [routerLink]="['movie-details',movie.id]" class="nav-link">
-                        <span class="movie-title">{{movie.original_title}}</span>
-                    </a>
-                    <p class="release-date">
-                        {{movie.release_date}}
-                    </p>
-                    <button (click)="watchListStore.toggleWatchList(movie)"
-                        class="position-absolute top-50 start-100 nav-link me-2 watchlist">
-                        <i [ngClass]="watchListStore.isInWatchList(movie.id)() ? 'pi pi-heart-fill text-warning' : 'pi pi-heart'"></i>
-                    </button>
-                </div>
-            </p-card>
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-outline-secondary" [class.active]="activeTab === 'movies'"
+      (click)="activeTab = 'movies'; moviesStore.loadMovies(1)">
+      {{ translateService.translate('NowPlaying') }}
+    </button>
+    <button class="btn btn-outline-secondary" [class.active]="activeTab === 'tv'" (click)="activeTab = 'tv'">
+     {{ translateService.translate('TvShows') }}
+    </button>
+  </div>
+
+  @if (activeTab === 'movies') {
+  @if (moviesStore.isLoading()) {
+  <div class="text-center my-5">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  } @else {
+  <div class="row">
+    @for (movie of moviesStore.movies(); track movie.id) {
+    <div class="col-6 col-md-3 col-lg-2 mb-5">
+      <p-card [style]="{ overflow: 'hidden', height: '450px' }" class="position-relative">
+        <ng-template #header>
+          <a [routerLink]="['movie-details', movie.id]">
+            <img [src]="movie.poster_url" alt="Poster" class="w-100" style="height: 300px; object-fit: cover;" />
+          </a>
+          <p-badge [value]="movie.vote_average.toFixed(1)" badgeSize="xlarge" severity="contrast"
+            [styleClass]="getRating(movie.vote_average)" class="position-absolute end-0"></p-badge>
+        </ng-template>
+        <div class="position-relative">
+          <a [routerLink]="['movie-details', movie.id]" class="nav-link">
+            <span class="movie-title">{{ movie.original_title }}</span>
+          </a>
+          <p class="release-date">{{ movie.release_date }}</p>
+          <button (click)="watchListStore.toggleWatchList(movie)"
+            class="position-absolute top-50 start-100 nav-link me-2 watchlist">
+            <i [ngClass]="
+                    watchListStore.isInWatchList(movie.id)()
+                      ? 'pi pi-heart-fill text-warning'
+                      : 'pi pi-heart'
+                  "></i>
+          </button>
         </div>
-    }@empty{
-        <li>There is no movies available</li>
+      </p-card>
+    </div>
+    } @empty {
+    <div class="col-12 text-center">
+      <p>{{ translateService.translate('NoMovies') }}</p>
+    </div>
     }
-<p-paginator
-  [rows]="rows"
-  [totalRecords]="totalResults"
-  [first]="(currentPage - 1) * rows"
-  (onPageChange)="onPageChange($event)"
-  class="mb-5">
-</p-paginator>
-    </div>
+  </div>
+  <div class="mb-5">
+    <p-paginator [rows]="rows" [totalRecords]="totalResults" [first]="(moviesStore.currentPage() - 1) * rows"
+      (onPageChange)="onPageChange($event)" class="mb-5">
+    </p-paginator>
+  </div>
+
+  }
+  } @else if (activeTab === 'tv') {
+  <app-tv-list />
+  }
 </div>

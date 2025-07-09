@@ -8,14 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule } from '@angular/common';
-import { WatchListStore } from '../../signals/movie.store';
-
+import { WatchListStore } from '../../signals/watchlist.store'
+import{RouterModule} from '@angular/router';
 @Component({
   selector: 'app-movie-details',
   standalone: true,
   templateUrl: './movie-details.html',
   styleUrls: ['./movie-details.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
 })
 export class MovieDetails implements OnInit {
   private _tmdbService = inject(TmdbService);
@@ -40,11 +40,11 @@ export class MovieDetails implements OnInit {
         this.loading = false;
       });
 
-      this._tmdbService.getRecommendations(id).subscribe((data:any) => {
+      this._tmdbService.getRecommendations(id).subscribe((data: any) => {
         this.recommendations = data.results;
       });
 
-      this._tmdbService.getReviews(id).subscribe((data:any) => {
+      this._tmdbService.getReviews(id).subscribe((data: any) => {
         this.reviews = data.results;
       });
     }

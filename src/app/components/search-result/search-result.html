@@ -1,0 +1,41 @@
+<div class="container py-4">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex gap-3 mb-5">
+        <input type="text" formControlName="searchInput" class="form-control" placeholder="search and explore...">
+        <button class="btn btn-warning">Search</button>
+    </form>
+    <h4 class="fw-bold mb-4">Search Results</h4>
+
+    @if (loading()) {
+    <div class="text-center my-5">
+        <div class="spinner-border text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    }
+    @else if (results().length > 0) {
+    <div class="row g-4">
+        @for (movie of results(); track movie.id) {
+        <div class="col-md-3">
+            <div class="card h-100">
+                <img [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path" class="card-img-top"
+                    [alt]="movie.title" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="text-muted">{{ movie.release_date }}</p>
+                </div>
+            </div>
+        </div>
+        }
+         <div class="text-center mt-4">
+    <a routerLink="/" class="btn btn-outline-secondary">
+     Back to Home Page
+    </a>
+  </div>
+    </div>
+    }
+    @else {
+    <div class="alert alert-info text-center">
+        No results found.
+    </div>
+    }
+</div>
